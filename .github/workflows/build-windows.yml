@@ -1,0 +1,33 @@
+name: Windows 실행 파일 빌드
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 의존성 설치
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller pytest
+      - name: 테스트
+        run: python -m pytest -q
+      - name: 자가 점검 (참고용 - 러너에 한국어 OCR 언어 팩이 없으면 OCR 항목은 실패로 표시됨)
+        run: |
+          python -m receipt_renamer --selftest
+          exit 0
+      - name: exe 빌드
+        run: >
+          pyinstaller --noconfirm --clean --onefile --windowed --name ReceiptRenamer
+          --collect-all tkinterdnd2 --collect-all winrt --collect-all pillow_heif
+          --collect-submodules receipt_renamer run_app.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ReceiptRenamer-exe
+          path: dist/ReceiptRenamer.exe

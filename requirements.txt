@@ -1,0 +1,14 @@
+anthropic>=0.75
+pillow>=10.0
+pillow-heif>=0.18
+pymupdf>=1.24
+openpyxl>=3.1
+tkinterdnd2>=0.4
+# Windows 내장 OCR (오프라인 추출) — Windows에서만 설치됨
+winrt-runtime>=2.0; sys_platform == "win32"
+winrt-Windows.Foundation>=2.0; sys_platform == "win32"
+winrt-Windows.Foundation.Collections>=2.0; sys_platform == "win32"
+winrt-Windows.Globalization>=2.0; sys_platform == "win32"
+winrt-Windows.Graphics.Imaging>=2.0; sys_platform == "win32"
+winrt-Windows.Media.Ocr>=2.0; sys_platform == "win32"
+winrt-Windows.Storage.Streams>=2.0; sys_platform == "win32"
